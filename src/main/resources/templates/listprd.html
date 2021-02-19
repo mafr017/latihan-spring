@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+</head>
+<body>
+<div layout:fragment="ctn">
+    <center>
+        <h2 class="text-info">List Product</h2>
+        <a class="btn btn-success"  th:href="@{/addprd}">Add Data</a>
+        <br>
+        <!--        <form action="#" th:action="@{/listmhs}">-->
+        <!--            <p>Nama: <input type="text" name="cari"></p>-->
+        <!--            <p><input type="submit" value="Submit"></p>-->
+        <!--        </form>-->
+        <br>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ProductId</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">SupplierId</th>
+                <th scope="col">CategoryId</th>
+                <th scope="col">Quantity per Unit</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Unit in Stock</th>
+                <th scope="col">Unit on Order</th>
+                <th scope="col">Reorder Level</th>
+                <th scope="col">Discontiued</th>
+                <th scope="col">Control</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="lprd,itStat: ${cekPrd}">
+                <td th:text="${itStat.index} + 1"></td>
+                <td th:text="${lprd.productId}"></td>
+                <td th:text="${lprd.productName}"></td>
+                <td th:text="${lprd.supplierId}"></td>
+                <td th:text="${lprd.categoryId}"></td>
+                <td th:text="${lprd.quantityperUnit}"></td>
+                <td th:text="${lprd.unitPrice}"></td>
+                <td th:text="${lprd.unitsInStock}"></td>
+                <td th:text="${lprd.unitsOnOrder}"></td>
+                <td th:text="${lprd.reorderLevel}"></td>
+                <td th:text="${lprd.discontinued}"></td>
+                <td><a class="btn btn-warning btn-sm" th:href="@{|updateprd/${lprd.productId}|}">Edit</a><a class="btn btn-danger btn-sm"  th:href="@{|deleteprd/${lprd.productId}|}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </center>
+</div>
+</body>
+</html>
