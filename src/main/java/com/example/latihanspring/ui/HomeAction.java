@@ -17,6 +17,8 @@ public class HomeAction {
     @Autowired
     private MasterData masterData;
 
+    private Long idPrd;
+
     @GetMapping("/listprd")
     public String listProduct(ModelMap modelMapParam) {
         modelMapParam.put("cekPrd", masterData.fetchProductsJdbc());
@@ -26,29 +28,31 @@ public class HomeAction {
     @GetMapping("/addprd")
     public String addProduct(Model model) {
         model.addAttribute("Product", new Products());
+        idPrd = 0L;
         return "addEditprd";
     }
 
     @GetMapping("/updateprd/{id}")
     public String updateProduct(@PathVariable("id") int id, Model model) {
         model.addAttribute("Product", masterData.fetchProductsJdbcByPrdId(id));
+        idPrd = Long.valueOf(id);
         return "addEditprd";
     }
 
     @GetMapping("/deleteprd/{id}")
-    public String deleteProduct(@PathVariable("id") int id) {
+    public String deleteProduct(@PathVariable("id") int id, ModelMap modelMapParam) {
         masterData.deleteProductJdbc(id);
+        modelMapParam.put("cekPrd", masterData.fetchProductsJdbc());
         return "listprd";
     }
 
     @PostMapping("/saveproduct")
     public String saveProduct(Products products) {
-        System.out.println(products.getProductId());
-//        if (products.getProductId() > 0L) {
-//            masterData.insertProductJdbc(products);
-//        } else {
+        if (idPrd > 0L) {
             masterData.updateProductJdbc(products);
-//        }
+        } else {
+            masterData.insertProductJdbc(products);
+        }
         return "redirect:listprd";
     }
 

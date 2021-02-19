@@ -52,28 +52,6 @@ public class MasterData {
         }
     }
 
-//    public Products fetchProductsJdbcByPrdId(int id) {
-//        if (ObjectUtils.isEmpty(id)) {
-//            id = 0;
-//        }
-//        return jdbcTemplate.queryForObject("SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
-//                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId = ? ",
-//                (resultSet, rowNumber) -> {
-//                    Products products = new Products();
-//                    products.setProductId(resultSet.getLong("productId"));
-//                    products.setProductName(resultSet.getString("productName"));
-//                    products.setSupplierId(resultSet.getInt("supplierId"));
-//                    products.setCategoryId(resultSet.getInt("categoryId"));
-//                    products.setQuantityperUnit(resultSet.getString("quantityperUnit"));
-//                    products.setUnitPrice(resultSet.getInt("unitPrice"));
-//                    products.setUnitsInStock(resultSet.getInt("unitsInStock"));
-//                    products.setUnitsOnOrder(resultSet.getInt("unitsOnOrder"));
-//                    products.setReorderLevel(resultSet.getInt("reorderLevel"));
-//                    products.setDiscontinued(resultSet.getInt("discontinued"));
-//                    return products;
-//                }, id);
-//    }
-
     public void insertProductJdbc(Products products) {
         final String query = "INSERT INTO products" +
                 " (productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock, unitsOnOrder, reorderLevel, discontinued)" +
@@ -114,7 +92,7 @@ public class MasterData {
     public void deleteProductJdbc(int id) {
         final String query = "DELETE FROM products WHERE productId = ? ";
         jdbcTemplate.update(query, id);
-        System.out.println("Update berhasil!");
+        System.out.println("Delete berhasil!");
     }
 
 }
