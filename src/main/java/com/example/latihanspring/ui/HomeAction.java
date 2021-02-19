@@ -41,9 +41,10 @@ public class HomeAction {
 
     @GetMapping("/deleteprd/{id}")
     public String deleteProduct(@PathVariable("id") int id, ModelMap modelMapParam) {
+        System.out.println(id);
         masterData.deleteProductJdbc(id);
         modelMapParam.put("cekPrd", masterData.fetchProductsJdbc());
-        return "listprd";
+        return "redirect:../listprd";
     }
 
     @PostMapping("/saveproduct")
