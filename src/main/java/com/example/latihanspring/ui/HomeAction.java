@@ -42,12 +42,12 @@ public class HomeAction {
     }
 
     @PostMapping("/saveproduct")
-    public String saveProduct(Products products, @RequestParam(name = "cari") String cari) {
+    public String saveProduct(Products products) {
         System.out.println(products.getProductId());
-//        if (products.getProductId() > 0) {
-            masterData.insertProductJdbc(products);
+//        if (products.getProductId() > 0L) {
+//            masterData.insertProductJdbc(products);
 //        } else {
-//            masterData.updateProductJdbc(products);
+            masterData.updateProductJdbc(products);
 //        }
         return "redirect:listprd";
     }
