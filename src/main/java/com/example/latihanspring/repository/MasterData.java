@@ -1,6 +1,7 @@
 package com.example.latihanspring.repository;
 
 import com.example.latihanspring.model.Products;
+import ognl.ObjectElementsAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -21,9 +22,12 @@ public class MasterData {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<Products> fetchProductsJdbc() {
+    public List<Products> fetchProductsJdbc(String cari) {
+        if (ObjectUtils.isEmpty(cari)) {
+            cari = "";
+        }
         return jdbcTemplate.query("SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
-                        " unitsOnOrder, reorderLevel, discontinued FROM products",
+                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId LIKE CONCAT ('%',?,'%')",
                 (resultSet, rowNumber) -> {
                     Products products = new Products();
                     products.setProductId(resultSet.getLong("productId"));
@@ -37,7 +41,7 @@ public class MasterData {
                     products.setReorderLevel(resultSet.getInt("reorderLevel"));
                     products.setDiscontinued(resultSet.getInt("discontinued"));
                     return products;
-                });
+                }, cari);
     }
     public Products fetchProductsJdbcByPrdId(int id) {
         try (Connection con = sql2oo.open()) {

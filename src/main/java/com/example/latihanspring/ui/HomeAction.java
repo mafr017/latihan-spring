@@ -20,8 +20,8 @@ public class HomeAction {
     private Long idPrd;
 
     @GetMapping("/listprd")
-    public String listProduct(ModelMap modelMapParam) {
-        modelMapParam.put("cekPrd", masterData.fetchProductsJdbc());
+    public String listProduct(@RequestParam(required = false, name = "cari") String cari, ModelMap modelMapParam) {
+        modelMapParam.put("cekPrd", masterData.fetchProductsJdbc(cari));
         return "listprd";
     }
 
@@ -43,7 +43,6 @@ public class HomeAction {
     public String deleteProduct(@PathVariable("id") int id, ModelMap modelMapParam) {
         System.out.println(id);
         masterData.deleteProductJdbc(id);
-        modelMapParam.put("cekPrd", masterData.fetchProductsJdbc());
         return "redirect:../listprd";
     }
 

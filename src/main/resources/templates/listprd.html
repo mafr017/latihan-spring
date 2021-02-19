@@ -10,13 +10,18 @@
 <div layout:fragment="ctn">
     <center>
         <h2 class="text-info">List Product</h2>
-        <a class="btn btn-success"  th:href="@{/addprd}">Add Data</a>
-        <br>
-        <!--        <form action="#" th:action="@{/listmhs}">-->
-        <!--            <p>Nama: <input type="text" name="cari"></p>-->
-        <!--            <p><input type="submit" value="Submit"></p>-->
-        <!--        </form>-->
-        <br>
+        <a class="btn btn-success" th:href="@{/addprd}">Add Data</a>
+        <hr>
+        <form action="#" th:action="@{/listprd}">
+            <div class="form-group">
+                <label for="cari" class="col-lg-2 control-label">Product ID</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="cari" name="cari" placeholder="Product ID">
+                </div>
+            </div>
+            <p><input class="btn btn-info" type="submit" value="Search"></p>
+        </form>
+        <hr>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -47,7 +52,10 @@
                 <td th:text="${lprd.unitsOnOrder}"></td>
                 <td th:text="${lprd.reorderLevel}"></td>
                 <td th:text="${lprd.discontinued}"></td>
-                <td><a class="btn btn-warning btn-sm" th:href="@{|updateprd/${lprd.productId}|}">Edit</a><a class="btn btn-danger btn-sm"  th:href="@{|deleteprd/${lprd.productId}|}">Delete</a></td>
+                <td>
+                    <a class="btn btn-warning btn-sm" th:href="@{|updateprd/${lprd.productId}|}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{|deleteprd/${lprd.productId}|}">Delete</a>
+                </td>
             </tr>
             </tbody>
         </table>
