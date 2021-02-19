@@ -39,28 +39,40 @@ public class MasterData {
                     return products;
                 });
     }
-
     public Products fetchProductsJdbcByPrdId(int id) {
-        if (ObjectUtils.isEmpty(id)) {
-            id = 0;
+        try (Connection con = sql2oo.open()) {
+            if (ObjectUtils.isEmpty(id)) id = 0;
+            final String query =
+                    "SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
+                            " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId = :proId ";
+
+            return con.createQuery(query)
+                    .addParameter("proId", id)
+                    .executeAndFetchFirst(Products.class);
         }
-        return jdbcTemplate.queryForObject("SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
-                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId = ? ",
-                (resultSet, rowNumber) -> {
-                    Products products = new Products();
-                    products.setProductId(resultSet.getLong("productId"));
-                    products.setProductName(resultSet.getString("productName"));
-                    products.setSupplierId(resultSet.getInt("supplierId"));
-                    products.setCategoryId(resultSet.getInt("categoryId"));
-                    products.setQuantityperUnit(resultSet.getString("quantityperUnit"));
-                    products.setUnitPrice(resultSet.getInt("unitPrice"));
-                    products.setUnitsInStock(resultSet.getInt("unitsInStock"));
-                    products.setUnitsOnOrder(resultSet.getInt("unitsOnOrder"));
-                    products.setReorderLevel(resultSet.getInt("reorderLevel"));
-                    products.setDiscontinued(resultSet.getInt("discontinued"));
-                    return products;
-                }, id);
     }
+
+//    public Products fetchProductsJdbcByPrdId(int id) {
+//        if (ObjectUtils.isEmpty(id)) {
+//            id = 0;
+//        }
+//        return jdbcTemplate.queryForObject("SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
+//                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId = ? ",
+//                (resultSet, rowNumber) -> {
+//                    Products products = new Products();
+//                    products.setProductId(resultSet.getLong("productId"));
+//                    products.setProductName(resultSet.getString("productName"));
+//                    products.setSupplierId(resultSet.getInt("supplierId"));
+//                    products.setCategoryId(resultSet.getInt("categoryId"));
+//                    products.setQuantityperUnit(resultSet.getString("quantityperUnit"));
+//                    products.setUnitPrice(resultSet.getInt("unitPrice"));
+//                    products.setUnitsInStock(resultSet.getInt("unitsInStock"));
+//                    products.setUnitsOnOrder(resultSet.getInt("unitsOnOrder"));
+//                    products.setReorderLevel(resultSet.getInt("reorderLevel"));
+//                    products.setDiscontinued(resultSet.getInt("discontinued"));
+//                    return products;
+//                }, id);
+//    }
 
     public void insertProductJdbc(Products products) {
         final String query = "INSERT INTO products" +

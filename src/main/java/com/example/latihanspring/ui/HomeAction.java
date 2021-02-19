@@ -44,11 +44,11 @@ public class HomeAction {
     @PostMapping("/saveproduct")
     public String saveProduct(Products products, @RequestParam(name = "cari") String cari) {
         System.out.println(products.getProductId());
-        if (products.getProductId() > 0) {
+//        if (products.getProductId() > 0) {
             masterData.insertProductJdbc(products);
-        } else {
-            masterData.updateProductJdbc(products);
-        }
+//        } else {
+//            masterData.updateProductJdbc(products);
+//        }
         return "redirect:listprd";
     }
 
