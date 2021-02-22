@@ -9,68 +9,77 @@
 <body>
 <div layout:fragment="ctn">
     <center>
-        <form class="form-horizontal" th:action="@{/saveproduct}" th:object="${Product}" method="post">
+        <form class="form-horizontal" th:action="@{/saveproduct}" th:object="${products}" method="post">
             <fieldset>
                 <legend>Input Product</legend>
                 <div class="form-group">
                     <label for="productId" class="col-lg-2 control-label">Product ID</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="productId" placeholder="Product ID" th:field="*{productId}">
-<!--                        <span class="alert" th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}">Error</span>-->
+                        <span class="alert" th:if="${#fields.hasErrors('productId')}" th:errors="*{productId}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="productName" class="col-lg-2 control-label">Product Name</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="productName" placeholder="Product Name" th:field="*{productName}">
+                        <span class="alert" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="supplierId" class="col-lg-2 control-label">Supplier ID</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="supplierId" placeholder="Supplier ID" th:field="*{supplierId}">
+                        <span class="alert" th:if="${#fields.hasErrors('supplierId')}" th:errors="*{supplierId}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="categoryId" class="col-lg-2 control-label">Category ID</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="categoryId" placeholder="Category ID" th:field="*{categoryId}">
+                        <span class="alert" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="quantityperUnit" class="col-lg-2 control-label">Quantity/Unit</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="quantityperUnit" placeholder="Quantity/Unit" th:field="*{quantityperUnit}">
+                        <span class="alert" th:if="${#fields.hasErrors('quantityperUnit')}" th:errors="*{quantityperUnit}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="unitPrice" class="col-lg-2 control-label">Unit Price</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="unitPrice" placeholder="Unit Price" th:field="*{unitPrice}">
+                        <span class="alert" th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="unitsInStock" class="col-lg-2 control-label">Units in Stock</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="unitsInStock" placeholder="Units in Stock" th:field="*{unitsInStock}">
+                        <span class="alert" th:if="${#fields.hasErrors('unitsInStock')}" th:errors="*{unitsInStock}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="unitsOnOrder" class="col-lg-2 control-label">Units on Order</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="unitsOnOrder" placeholder="Units on Order" th:field="*{unitsOnOrder}">
+                        <span class="alert" th:if="${#fields.hasErrors('unitsOnOrder')}" th:errors="*{unitsOnOrder}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="reorderLevel" class="col-lg-2 control-label">Reorder Level</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="reorderLevel" placeholder="Reorder Level" th:field="*{reorderLevel}">
+                        <span class="alert" th:if="${#fields.hasErrors('reorderLevel')}" th:errors="*{reorderLevel}">Error</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="discontinued" class="col-lg-2 control-label">Discontinued</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="discontinued" placeholder="Discontinued" th:field="*{discontinued}">
+                        <span class="alert" th:if="${#fields.hasErrors('discontinued')}" th:errors="*{discontinued}">Error</span>
                     </div>
                 </div>
 
