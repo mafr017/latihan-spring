@@ -72,6 +72,13 @@ public class HomeAction {
         return ResponseEntity.ok(products);
     }
 
+    @PostMapping("/api/updateproductjson")
+    public ResponseEntity<Products> updateproductjson(@RequestBody Products products) {
+        System.out.println(products.getProductId() + " : " + products.getProductName());
+        masterData.updateProductJdbc(products);
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("/api/dataproductjson/{id}")
     public ResponseEntity<Products> datamahasiswa(@PathVariable(required = false, name = "id") int id) {
         return ResponseEntity.ok(masterData.fetchProductsJdbcByPrdId(id));
@@ -79,6 +86,14 @@ public class HomeAction {
 
     @GetMapping("/api/listproductjson")
     public ResponseEntity<List<Products>> daftarmahasiswajson(@RequestParam(required = false, name = "cari") String cari) {
+        return ResponseEntity.ok(masterData.fetchProductsJdbc(cari));
+    }
+
+    @DeleteMapping("/api/deleteproductjson/{id}")
+    public ResponseEntity<List<Products>> deleteproductjson(@PathVariable("id") int id) {
+        System.out.println("Proses delete " + id);
+        masterData.deleteProductJdbc(id);
+        String cari = "";
         return ResponseEntity.ok(masterData.fetchProductsJdbc(cari));
     }
 
