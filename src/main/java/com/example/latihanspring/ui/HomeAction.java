@@ -3,16 +3,15 @@ package com.example.latihanspring.ui;
 import com.example.latihanspring.model.Products;
 import com.example.latihanspring.repository.MasterData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class HomeAction {
@@ -43,7 +42,7 @@ public class HomeAction {
     }
 
     @GetMapping("/deleteprd/{id}")
-    public String deleteProduct(@PathVariable("id") int id, ModelMap modelMapParam) {
+    public String deleteProduct(@PathVariable("id") int id) {
         System.out.println(id);
         masterData.deleteProductJdbc(id);
         return "redirect:../listprd";
@@ -57,11 +56,30 @@ public class HomeAction {
         } else {
             if (idPrd > 0L) {
                 masterData.updateProductJdbc(products);
+                System.out.println("Update " + products.getProductName());
             } else {
+                System.out.println("Input " + products.getProductName());
                 masterData.insertProductJdbc(products);
             }
             return "redirect:listprd";
         }
+    }
+
+    @PostMapping("/api/saveproductjson")
+    public ResponseEntity<Products> saveproductjson(@RequestBody Products products) {
+        System.out.println(products.getProductId() + " : " + products.getProductName());
+        masterData.insertProductJdbc(products);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/api/dataproductjson/{id}")
+    public ResponseEntity<Products> datamahasiswa(@PathVariable(required = false, name = "id") int id) {
+        return ResponseEntity.ok(masterData.fetchProductsJdbcByPrdId(id));
+    }
+
+    @GetMapping("/api/listproductjson")
+    public ResponseEntity<List<Products>> daftarmahasiswajson(@RequestParam(required = false, name = "cari") String cari) {
+        return ResponseEntity.ok(masterData.fetchProductsJdbc(cari));
     }
 
 }
