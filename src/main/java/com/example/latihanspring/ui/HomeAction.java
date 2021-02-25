@@ -80,7 +80,7 @@ public class HomeAction {
     }
 
     @GetMapping("/api/dataproductjson/{id}")
-    public ResponseEntity<Products> datamahasiswa(@PathVariable(required = false, name = "id") int id) {
+    public ResponseEntity<Products> dataproductjson(@PathVariable(required = false, name = "id") int id) {
         return ResponseEntity.ok(masterData.fetchProductsJdbcByPrdId(id));
     }
 

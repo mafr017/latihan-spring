@@ -27,7 +27,7 @@ public class MasterData {
             cari = "";
         }
         return jdbcTemplate.query("SELECT productId, productName, supplierId, categoryId, quantityperUnit, unitPrice, unitsInStock," +
-                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productId LIKE CONCAT ('%',?,'%')",
+                        " unitsOnOrder, reorderLevel, discontinued FROM products WHERE productName LIKE CONCAT ('%',?,'%')",
                 (resultSet, rowNumber) -> {
                     Products products = new Products();
                     products.setProductId(resultSet.getLong("productId"));
