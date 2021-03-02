@@ -1,6 +1,7 @@
 package com.example.latihanspring.repository;
 
 import com.example.latihanspring.model.Products;
+import com.example.latihanspring.model.Users;
 import ognl.ObjectElementsAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -43,6 +45,7 @@ public class MasterData {
                     return products;
                 }, cari);
     }
+
     public Products fetchProductsJdbcByPrdId(int id) {
         try (Connection con = sql2oo.open()) {
             if (ObjectUtils.isEmpty(id)) id = 0;
@@ -97,6 +100,30 @@ public class MasterData {
         final String query = "DELETE FROM products WHERE productId = ? ";
         jdbcTemplate.update(query, id);
         System.out.println("Delete berhasil!");
+    }
+
+    public Users checkUsers(Users users) {
+        final String query = "SELECT id, username, password, islogin FROM users WHERE username = ? AND password = ?";
+        return jdbcTemplate.queryForObject(query,
+                (resultSet, rowNumber) -> {
+                    Users users1 = new Users();
+                    users1.setId(resultSet.getInt("id"));
+                    users1.setUsername(resultSet.getString("username"));
+                    users1.setPassword(resultSet.getString("password"));
+                    users1.setIsLogin(resultSet.getString("islogin"));
+                    return users1;
+                }, users.getUsername(), users.getPassword());
+    }
+
+    public void updateIsLogin(Users users, String statusLogin) {
+        final String query;
+        if (statusLogin.equals("true")){
+            query = "UPDATE users SET islogin = ?, jam_login = now() WHERE username = ? AND password = ?";
+        } else {
+            query = "UPDATE users SET islogin = ?, jam_login = null WHERE username = ? AND password = ?";
+        }
+        jdbcTemplate.update(query, statusLogin, users.getUsername(), users.getPassword());
+        System.out.println("Update isLogin = " + statusLogin);
     }
 
 }
